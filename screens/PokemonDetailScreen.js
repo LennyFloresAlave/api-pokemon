@@ -4,6 +4,8 @@ import { View, Text, StyleSheet, Image, Dimensions, ScrollView } from 'react-nat
 const PokemonDetailScreen = ({ route }) => {
   const { pokemon } = route.params;
   const { width } = Dimensions.get('window'); // Obtém a largura da tela
+  const cardWidth = (width - 32) / 2; // Largura do cartão, considerando margem
+  const cardHeight = cardWidth * 1.2; // Altura do cartão proporcional à largura
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -28,6 +30,7 @@ const PokemonDetailScreen = ({ route }) => {
 
 const { width } = Dimensions.get('window'); // Obtém a largura da tela
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -40,14 +43,15 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     margin: 16,
-    width: 400, // Ajuste da largura para caber na tela
+    width: 290, // Ajuste da largura para caber na tela
+    height: 500,
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: '#4caf50', // Borda verde clara
+    borderColor: 'cyan', // Borda verde clara
     borderWidth: 2, // Largura da borda
-    shadowColor: '#000',
+    shadowColor: 'blue',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.5,
     shadowRadius: 6,
     elevation: 4,
     marginTop:200

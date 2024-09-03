@@ -14,7 +14,7 @@ const PokemonListScreen = ({ navigation }) => {
 
   const fetchPokemonData = async () => {
     try {
-      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20');
+      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=30');
       const data = await response.json();
 
       const pokemonDetails = await Promise.all(
@@ -55,7 +55,9 @@ const PokemonListScreen = ({ navigation }) => {
     navigation.navigate('PokemonDetail', { pokemon });
   };
 
-  const { width } = Dimensions.get('window'); // Obtém a largura da tela
+  const { width } = Dimensions.get('window');
+  const cardWidth = (width - 32) / 2; // Largura do cartão, considerando margem
+  const cardHeight = cardWidth * 1.2; // Altura do cartão proporcional à largura
 
   return (
     <View style={styles.container}>
@@ -80,9 +82,9 @@ const PokemonListScreen = ({ navigation }) => {
             data={filteredData}
             keyExtractor={(item) => item.name}
             contentContainerStyle={styles.list}
-            numColumns={4} // Define o número de colunas para a grade
+            numColumns={2} // Ajusta para 2 colunas por linha
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handlePress(item)} style={styles.card}>
+              <TouchableOpacity onPress={() => handlePress(item)} style={[styles.card, { width: cardWidth, height: cardHeight }]}>
                 <Image source={{ uri: item.imageUrl }} style={styles.image} />
                 <View style={styles.infoContainer}>
                   <Text style={styles.text}>{item.name.toUpperCase()}</Text>
@@ -100,101 +102,94 @@ const PokemonListScreen = ({ navigation }) => {
 const { width } = Dimensions.get('window'); // Obtém a largura da tela
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#e0f7fa', // Fundo com uma cor clara e fresca
-      paddingBottom: 16,
-    },
-    title: {
-      fontSize: 28,
-      fontWeight: 'bold',
-      color: '#00796b',
-      textAlign: 'center',
-      marginVertical: 16,
-    },
-    searchContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      backgroundColor: '#ffffff',
-      borderRadius: 25,
-      marginHorizontal: 16,
-      marginTop: 16,
-      marginBottom: 10,
-      paddingHorizontal: 12,
-      paddingVertical: 8,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.1,
-      shadowRadius: 10,
-      elevation: 5,
-    },
-    searchBar: {
-      flex: 1,
-      height: 40,
-      fontSize: 16,
-      paddingHorizontal: 12,
-      borderRadius: 20,
-      borderColor: '#00796b',
-      borderWidth: 1,
-    },
-    searchButton: {
-      backgroundColor: '#00796b', // Cor do botão de pesquisa
-      borderRadius: 20,
-      padding: 8,
-      marginLeft: 8,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    list: {
-      paddingHorizontal: 8,
-      paddingTop: 16,
-      alignItems: 'center', // Centraliza a lista horizontalmente
-    },
-    card: {
-      backgroundColor: '#ffffff', // Fundo dos cartões
-      borderRadius: 12,
-      padding: 12,
-      margin: 8,
-      width: 250, 
-      height:300,// Ajuste da largura para 2 cartões por linha com espaçamento
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderColor: '#4caf50', // Borda verde clara
-      borderWidth: 2, // Largura da borda
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 2,
-      marginRight:50,
-      marginBottom:20
-    },
-    cardContent: {
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    infoContainer: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 8,
-    },
-    text: {
-      fontSize: 14, // Texto maior para se ajustar ao tamanho reduzido dos cartões
-      fontWeight: 'bold',
-      color: '#333',
-    },
-    typeText: {
-      fontSize: 12,
-      color: '#666',
-      marginTop: 2,
-    },
-    image: {
-      width: 100, // Imagem ajustada para se adequar ao cartão menor
-      height: 100,
-      borderRadius: 16,
-      marginBottom: 8,
-    },
-  });
-  
+  container: {
+    flex: 1,
+    backgroundColor: '#e0f7fa',
+    paddingBottom: 16,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#00796b',
+    textAlign: 'center',
+    marginVertical: 16,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderRadius: 25,
+    marginHorizontal: 16,
+    marginTop: 16,
+    marginBottom: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  searchBar: {
+    flex: 1,
+    height: 40,
+    fontSize: 16,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    borderColor: '#00796b',
+    borderWidth: 1,
+  },
+  searchButton: {
+    backgroundColor: '#00796b',
+    borderRadius: 20,
+    padding: 8,
+    marginLeft: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  list: {
+    paddingHorizontal: 8,
+    paddingTop: 16,
+    alignItems: 'center',
+  },
+  card: {
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    padding: 12,
+    margin: 8,
+    borderColor: 'cyan',
+    borderWidth: 2,
+    shadowColor: 'blue',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 2,
+    marginRight: 8,
+    marginBottom: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  infoContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 8,
+  },
+  text: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  typeText: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 2,
+  },
+  image: {
+    width: '100%',
+    height: '60%',
+    borderRadius: 16,
+    marginBottom: 8,
+  },
+});
 
 export default PokemonListScreen;
